@@ -18,6 +18,7 @@ RUN pip install -U scons boto scour taschenmesser
 
 # install node packages
 # explicitly say where to install packages, since these locations are required by scons build
+# There is a chance some (or all) of these packages are not required for installation here, if they are listed in autobahn-js package.json.
 RUN npm install --prefix /usr/local/lib \
     browserify \
     nodeunit \
@@ -32,4 +33,8 @@ RUN npm install --prefix /usr/local/lib \
     utf-8-validate
 
 # clone source and build
-RUN cd ~ && git clone https://github.com/rogersp/autobahn-js.git && cd autobahn-js && scons
+RUN cd ~ \
+    && git clone https://github.com/rogersp/autobahn-js.git \
+    && cd autobahn-js \
+    && npm install \    
+    && scons
